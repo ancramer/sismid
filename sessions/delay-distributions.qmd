@@ -129,12 +129,19 @@ To see exactly what the function does, just type the function name, e.g. `add_de
 
 ```{r inf_hosp_solution}
 df <- add_delays(infection_times)
+glimpse(df)
 ```
 
 ::: {.callout-tip}
 ## Take 2 minutes
 Have a look at the `add_delays()`  function and try to understand its inner workings.
 You can also access a help file for this function, just like any other R function, using `?add_delays`.
+```{r}
+?add_delays()
+# NAs for hosp time are people who didn't get hospitalized
+# hosp time samples from gamma to get time, yes/no hospotalization samples from binom
+
+```
 :::
 
 ::: {.callout-note collapse="true"}
@@ -162,7 +169,7 @@ dfl <- df |>
   ))
 # plot
 ggplot(dfl, aes(x = time)) +
-  geom_histogram(position = "dodge", binwidth = 1) +
+  geom_histogram(position = "dodge", binwidth = 1, fill="magenta3") +
   facet_wrap(~ type, ncol = 1) +
   xlab("Time (in days)") +
   ylab("Count")
@@ -189,6 +196,10 @@ The `nfidd_cmdstan_model()` function loads a pre-written Stan model for this pur
 ```{r naive_delay_model}
 mod <- nfidd_cmdstan_model("lognormal")
 mod
+
+?nfidd_cmdstan_model()
+
+
 ```
 
 ::: {.callout-tip}
